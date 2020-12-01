@@ -39,7 +39,7 @@
     - 컴퓨터 부품을 갈아 끼우듯이 컴포넌트를 쉽고 유연하게 변경하면서 개발할 수 있어야 한다.
     - 따라서 가장 중요한 객체지향의 특징은 `다형성(polymorphism)` 이다.
     
-## 다형성(polymorphism)
+## 다형성(polymorphism) = 객체지향의 
 
 ### 역할(interface)과 구현(implementation)
 
@@ -123,3 +123,11 @@ public class MailController {
 
 MailServiceFactory.findMailService 내부에서는 findEmployee 메서드를 실행한다. (where uniqueId = #uniqueId#) 만약에 findEmployee 의 결과가 null 이면 외부망이고 null 이 아니면 내부망
 이라고 판단해서 메일을 발송한다.
+
+## 스프링과 다형성
+
+- 스프링은 다형성을 극대화하여 이용할 수 있게 해준다.
+- 스프링의 IoC, DI 는 다형성을 활용해서 역할과 구현을 편리하게 다룰 수 있도록 해준다.
+- 스프링을 사용하면 구현을 편리하게 변경할 수 있다.
+
+> 즉, 스프링의 핵심은 좋은객체지향 프로그래밍을 할 수 있게 도와주는 도구이며 객체지향의 꽃은 다형성이고, 따라서 스프링에서 가장 중요한 요소는 IoC, DI 이며, 스프링은 다형성을 편리하게 사용할 수 있도록 해주는 도구이다.
