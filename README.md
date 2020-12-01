@@ -39,7 +39,9 @@
     - 컴퓨터 부품을 갈아 끼우듯이 컴포넌트를 쉽고 유연하게 변경하면서 개발할 수 있어야 한다.
     - 따라서 가장 중요한 객체지향의 특징은 `다형성(polymorphism)` 이다.
     
-### 다형성(polymorphism)
+## 다형성(polymorphism)
+
+### 역할(interface)과 구현(implementation)
 
 - 역할(interface)과 구현(implementation)으로 구분
   - ex) 운전자(역할) - 자동차(역할) - 자동차(구현)
@@ -52,3 +54,72 @@
   - 클라이언트는 구현 대상의 내부 구조를 몰라도 된다.
   - 클라이언트는 구현 대상의 내부 구조가 변경되어도 영향을 받지 않는다.
   - 클라이언트는 구현 대상 자체를 변경해도 영향을 받지 않는다.
+- 객체를 설계할 때 `역할`과 `구현`을 명확하게 분리해야한다.
+- 객체 설계 시 역할을 먼저 부여하고, 그 다음 그 역할을 수행하는 구현을 만든다.
+
+### 객체의 협력이라는 관계부터 생각
+
+- 혼자있는 객체는 없다.
+  - 다형성을 공부하면서 이런 생각을 할 수가 있다. 부모(Interface)가 있고 그걸 구현한 구현체들이 있는데 클라이언트는 없네? 라고 생각할 수 있는데, 클라이언트는 요청하는 사람, 서버는 응답하는 사람이라고 생각할 수 있다.
+- 클라이언트 : 요청, 서버: 응답
+- 수 많은 클라이언트와 서버는 서로 협력 관계를 가진다.
+
+### 오버라이딩
+
+- 다형성으로 인터페이스를 구현한 객체를 실행 시점에서 유연하게 변경할 수 있다. 
+  - ex) 추상 팩토리 패턴과 전략패턴을 사용한 경우
+  
+### 다형성의 본질
+ 
+- 다형성으로 인터페이스를 구현한 객체를 실행 시점에서 유연하게 변경할 수 있다. 
+  - 따라서 인터페이스를 잘 설계하는 것이 중요하다.
+- 다형성의 본질을 이해하려면 `협력`이라는 객체 사이의 관계에서 시작해야한다.
+- `클라이언트를 변경하지 않고 서버 기능을 유연하게 변경할 수 있다.`
+
+```java
+public class UserService {
+  
+  // private UserRepository userRepository = new UserJoinRepository();
+  private UserRepository userRepository = new UserFindRepository();
+  
+}
+```
+
+위 코드에서 클라이언트는 UserService 가 되며, 서버는 UserRepository(역할) 가 된다. 구현은 UserJoinRepository 와 UserFindRepository 이다.
+
+- MailService (역할)
+  - sendMail() (추상메서드)
+  - MailExternalService(외부망전용)
+  - MailInternalService(내부망전용)
+  
+```java
+public class MailVO {
+
+  private String uniqueNo; // 사번 및 회원 ID
+  private String title; // 제목
+  private String content; // 내용
+  
+  // 생략
+  
+}
+```
+
+```java
+@Controller
+public class MailController {
+
+  @PostMapping("/sendMail")
+  public String sendMail(MailVO mailVO) {
+      // 실행 시점에 클라이언트를 변경하지 않고 서버의 기능을 유연하게 변경할 수 있다.
+      MailService mailService = MailServiceFactory.findMailService(mailVO);
+      mailService.sendMail();
+      // 생략
+  }
+
+}
+```
+
+여기서 클라이언트는 MailController 이며 역할은 MailService 구현은 MailExternalService 와 MailInternalService 이다. 추상 팩토리 패턴을 통해서 mailVO 안에 있는 uniqueId 를 통해서
+
+MailServiceFactory.findMailService 내부에서는 findEmployee 메서드를 실행한다. (where uniqueId = #uniqueId#) 만약에 findEmployee 의 결과가 null 이면 외부망이고 null 이 아니면 내부망
+이라고 판단해서 메일을 발송한다.
