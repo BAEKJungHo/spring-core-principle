@@ -83,7 +83,7 @@ public class UserService {
   private UserRepository userRepository = new UserFindRepository();
   
 }
-```
+``` 
 
 위 코드에서 클라이언트는 UserService 가 되며, 서버는 UserRepository(역할) 가 된다. 구현은 UserJoinRepository 와 UserFindRepository 이다.
 
