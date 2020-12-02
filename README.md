@@ -131,3 +131,39 @@ MailServiceFactory.findMailService 내부에서는 findEmployee 메서드를 실
 - 스프링을 사용하면 구현을 편리하게 변경할 수 있다.
 
 > 즉, 스프링의 핵심은 좋은 객체지향 프로그래밍을 할 수 있게 도와주는 도구이며 객체지향의 꽃은 다형성이고, 따라서 스프링에서 가장 중요한 요소는 IoC, DI 이며, 스프링은 다형성을 편리하게 사용할 수 있도록 해주는 도구이다.
+
+## 좋은 객체 지향 설계 원칙 : SOLID
+
+- SRP(Single Resposibility Principle, 단일 책임 원칙)
+- OCP(Open/Closed Principle, 개방 폐쇄 원칙) : 가장 중요한 원칙
+- LSP(Liskov Substitution Principle, 리스코프 치환 원칙)
+- ISP(Interface Segregation Principle, 인터페이스 분리 원칙)
+- DIP(Dependency Inversion Principle, 의존관계 역전 원칙)
+
+### SRP
+
+- 한 클래스는 하나의 책임만 져야 한다.
+- 하나의 책임이라는 것은 모호하다. (문맥과 상황에 따라 다르다.)
+- `중요한 기준은 변경`이다. 변경이 있을때 파급 효과가 작으면 단일 책임 원칙을 잘 따른 것.\
+- ex) UI 변경, 객체의 생성과 사용을 분리
+
+### OCP
+
+- 소프트웨어 요소는 `확장(새로운 기능 추가)에는 열`려 있어야 하며, `변경(기존 코드의 변경)에는 닫혀` 있어야 한다.
+  - 즉, 기존 코드의 변경 없이 새로운 기능을 추가
+  - 인터페이스를 구현한 새로운 클래스를 만들어 새로운 기능을 구현
+- 다형성 활용
+- UserService 클라이언트가 구현 클래스를 직접 선택
+  - 기존 코드의 변경이 일어남
+  - 구현 객체를 변경하기 위해서 기존 코드를 변경해야함
+  - 다형성을 사용했지만 OCP 를 지키지 못함
+- 해결 방법
+  - `객체를 생성하고 연관 관계를 맺어주는 별도의 조립 설정자가 필요함`
+```java
+public class UserService {
+  
+  // private UserRepository userRepository = new UserJoinRepository();
+  private UserRepository userRepository = new UserFindRepository();
+  
+}
+``` 
