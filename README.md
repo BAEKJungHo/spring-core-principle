@@ -135,10 +135,10 @@ MailServiceFactory.findMailService 내부에서는 findEmployee 메서드를 실
 ## 좋은 객체 지향 설계 원칙 : SOLID
 
 - SRP(Single Resposibility Principle, 단일 책임 원칙)
-- OCP(Open/Closed Principle, 개방 폐쇄 원칙) : 가장 중요한 원칙
+- OCP(Open/Closed Principle, 개방 폐쇄 원칙) : 가장 중요한 원칙 1.
 - LSP(Liskov Substitution Principle, 리스코프 치환 원칙)
 - ISP(Interface Segregation Principle, 인터페이스 분리 원칙)
-- DIP(Dependency Inversion Principle, 의존관계 역전 원칙)
+- DIP(Dependency Inversion Principle, 의존관계 역전 원칙) : 가장 중요한 원칙 2.
 
 ### SRP
 
@@ -159,6 +159,7 @@ MailServiceFactory.findMailService 내부에서는 findEmployee 메서드를 실
   - 다형성을 사용했지만 OCP 를 지키지 못함
 - 해결 방법
   - `객체를 생성하고 연관 관계를 맺어주는 별도의 조립 설정자가 필요함`
+  
 ```java
 public class UserService {
   
@@ -166,4 +167,40 @@ public class UserService {
   private UserRepository userRepository = new UserFindRepository();
   
 }
-``` 
+```
+
+### LSP
+
+- 프로그램 객체는 프로그램의 정확성을 깨뜨리지 않으면서 하위 타입의 인스턴스로 바꿀 수 있어야 한다.
+- 다형성에서 하위 클래스는 `인터페이스 규약`을 다 지켜야한다. 다형성을 지원하기 위한 원칙. 
+- 인터페이스를 구현한 구현체를 믿고 사용하려면 이 원칙이 필요하다.
+- 단순히 컴파일 성공하는 것을 넘어서는 이야기
+- ex) 자동차 엑셀은 앞으로 가야함. 뒤로 가게 만들면 LSP 원칙 위반. 느리더라도 앞으로 가야 함.
+
+### ISP
+
+- 특정 클라이언트를 위한 여러개의 인터페이스가 하나의 범용 인터페이스보다 낫다.
+- 자동차 인터페이스 -> 운전 인터페이스, 정비 인터페이스로 분리
+- 사용자 인터페이스 -> 운전자 클라이언트, 정비사 클라이언트로 분리
+- 인터페이스를 분리하면 정비 인터페이스가 변경되어도 운전자에게 영향을 미치지 않음
+- `인터페이스가 명확해지고 대체 가능성이 높아진다.`
+
+### DIP
+
+- 프로그래머는 `추상화에 의존해야지 구체화에 의존하면 안된다.`
+  - 즉, 구현체에 의존하지 말고 인터페이스에 의존하라는 의미
+  - 앞서 말한, `역할에 의존하게 해야한다는 것`과 같다.
+  - 역할과 구현을 철저하게 분리 해야 한다.
+
+```java
+public class UserService {
+  
+  // private UserRepository userRepository = new UserJoinRepository();
+  private UserRepository userRepository = new UserFindRepository();
+  
+}
+```
+
+UserService 는 인터페이스에 의존하지만 구현 클래스에도 동시에 의존한다. `클라이언트가 구현체를 직접 선택 : DIP 위반`
+
+> 다형성 만으로는 OCP, DIP 를 지킬 수 없다.
