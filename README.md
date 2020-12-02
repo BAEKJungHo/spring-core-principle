@@ -39,7 +39,7 @@
     - 컴퓨터 부품을 갈아 끼우듯이 컴포넌트를 쉽고 유연하게 변경하면서 개발할 수 있어야 한다.
     - 따라서 가장 중요한 객체지향의 특징은 `다형성(polymorphism)` 이다.
     
-## 다형성(polymorphism) = 객체지향의 
+## 다형성(polymorphism) = 객체지향의 꽃 
 
 ### 역할(interface)과 구현(implementation)
 
