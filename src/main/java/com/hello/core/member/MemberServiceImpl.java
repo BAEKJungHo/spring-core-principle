@@ -9,7 +9,17 @@ package com.hello.core.member;
 public class MemberServiceImpl implements MemberService {
 
     // 단축키 : ctrl + shift + enter 세미콜론까지 붙여준다.
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
+    // private final MemberRepository memberRepository = new MemoryMemberRepository();
+
+    private final MemberRepository memberRepository;
+
+    /**
+     * 생성자를 통해서 구현체를 주입 받는다.
+     * @param memberRepository
+     */
+    public MemberServiceImpl(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
 
     @Override
     public void join(Member member) {
