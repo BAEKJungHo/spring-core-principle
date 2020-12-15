@@ -18,7 +18,6 @@
 
 * Assertions
 * Assertions.assertThat(member).isEqualTo(findMember); 처럼 쓰는 것보단 static 을 import 해서 아래 처럼 사용하는게 낫다.
-*
 * import static org.assertj.core.api.Assertions.assertThat;
 * assertThat(discount).isEqualTo(1000);
 
