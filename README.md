@@ -101,6 +101,7 @@ public class UserService {
 ``` 
 
 위 코드에서 클라이언트는 UserService 가 되며, 서버는 UserRepository(역할) 가 된다. 구현은 UserJoinRepository 와 UserFindRepository 이다.
+위 코드는 다형성을 제대로 활용하지 못한 사례이다. Repository 구현체를 바꾸기 위해서는 클라이언트의 코드를 수정해야한다.
 
 - MailService (역할)
   - sendMail() (추상메서드)
