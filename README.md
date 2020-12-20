@@ -844,3 +844,106 @@ public MemberRepository memberRepository() {
 - @Bean만 사용해도 스프링 빈으로 등록되지만, 싱글톤을 보장하지 않는다.
 - memberRepository() 처럼 의존관계 주입이 필요해서 메서드를 직접 호출할 때 싱글톤을 보장하지 않는다.
 - 크게 고민할 것이 없다. 스프링 설정 정보는 항상 @Configuration 을 사용하자.
+
+## 컴포넌트 스캔(@ComponentScan)
+
+- 스프링은 설정 정보가 없어도 자동으로 스프링 빈을 등록하는 컴포넌트 스캔이라는 기능을 제공한다.
+- 또 의존관계도 자동으로 주입하는 @Autowired 라는 기능도 제공한다.
+- 컴포넌트 스캔을 사용하려면 먼저 @ComponentScan 을 설정 정보에 붙여주면 된다.
+- 기존의 AppConfig 와는 다르게 @Bean으로 등록한 클래스가 하나도 없다!
+
+```java
+@Configuration
+@ComponentScan(excludeFilters = @Filter(type = FilterType.ANNOTATION, classes = Configuration.class))
+public class AutoAppConfig {
+
+}
+```
+
+> 컴포넌트 스캔을 사용하면 @Configuration 이 붙은 설정 정보도 자동으로 등록되기 때문에, AppConfig, TestConfig 등 앞서 만들어두었던 설정 정보도 함께 등록되고, 실행되어 버린다. 그래서 excludeFilters 를 이용해서 설정정보는 컴포넌트 스캔 대상에서 제외했다. 보통 설정 정보를 컴포넌트
+스캔 대상에서 제외하지는 않지만, 기존 예제 코드를 최대한 남기고 유지하기 위해서 이 방법을 선택했다
+
+## 컴포넌트 스캔의 자동 의존 관계 주입 과정
+
+### 1. 컴포넌트 스캔 대상 어노테이션 작성
+
+![img10](/images/10.JPG)
+
+- 컴포넌트 스캔은 `@Component, @Configuration, @Service, @Controller, @RestController, @Repository` 해당 어노테이션이 적용된 클래스를 빈으로 등록해준다.
+- 이때 스프링 빈의 기본 이름은 클래스 명을 사용하되 맨 앞글자만 소문자로 사용한다.
+- 빈 이름 지정
+  - `@Component("memberService")`
+
+> 참고: 사실 애노테이션에는 상속관계라는 것이 없다. 그래서 이렇게 어노테이션이 특정 어노테이션을 들고있는 것을 인식할 수 있는 것은 자바 언어가 지원하는 기능은 아니고, 스프링이 지원하는 기능이다.
+>
+> 참고: useDefaultFilters 옵션은 기본으로 켜져있는데, 이 옵션을 끄면 기본 스캔 대상들이 제외된다. 그냥 이런 옵션이 있구나 정도 알고 넘어가자.
+
+- 필터
+  - `includeFilters` : 컴포넌트 스캔 대상을 추가로 지정한다.
+  - `excludeFilters` : 컴포넌트 스캔에서 제외할 대상을 지정한다.
+
+## 2. @Autowired 의존 관계 자동 주입
+
+![img11](/images/11.JPG)
+
+- 생성자에 @Autowired 를 지정하면, 스프링 컨테이너가 자동으로 해당 스프링 빈을 찾아서 주입한다.
+  - @Autowired Spring 4.3 버전 부터 @Autowired 생략 가능하다.
+  - 따라서 생성자 주입은 보통 @RequiredArgsConstructor 과 private final 로 빈으로 등록할 변수를 선언해서 의존 관계를 주입 받아서 사용한다.
+- 이때 기본 조회 전략은 타입이 같은 빈을 찾아서 주입한다.
+- getBean(MemberRepository.class) 와 동일하다고 이해하면 된다.
+
+![img12](/images/12.JPG)
+
+## 탐색 위치 지정
+
+```java
+@ComponentScan(
+  basePackages = "hello.core",
+}
+```
+
+- `basePackages` : 탐색할 패키지의 시작 위치를 지정한다. 이 패키지를 포함해서 하위 패키지를 모두 탐색한다.
+- `basePackages = {"hello.core", "hello.service"}` 이렇게 여러 시작 위치를 지정할 수도 있다.
+- `basePackageClasses` : 지정한 클래스의 패키지를 탐색 시작 위로 지정한다.
+- 만약 지정하지 않으면 @ComponentScan 이 붙은 설정 정보 클래스의 패키지가 시작 위치가 된다.
+
+### 권장하는 방법
+
+개인적으로 즐겨 사용하는 방법은 패키지 위치를 지정하지 않고, 설정 정보 클래스의 위치를 프로젝트 최상단에 두는 것이다. 최근 스프링 부트도 이 방법을 기본으로 제공한다.
+
+예를 들어 프로젝트가 다음과 같이 구성되어 있으면
+
+- com.hello
+- com.hello.serivce
+- com.hello.repository
+
+프로젝트 시작 루트(com.hello), 여기에 AppConfig 같은 메인 설정 정보를 두고,@ComponentScan 애노테이션을 붙이고, basePackages 지정은 생략한다.
+
+이렇게 하면 com.hello 를 포함한 하위는 모두 자동으로 컴포넌트 스캔의 대상이 된다. 그리고 프로젝트 메인 설정 정보는 프로젝트를 대표하는 정보이기 때문에 프로젝트 시작 루트 위치에 두는 것이 좋다 생각한
+다.
+
+참고로 스프링 부트를 사용하면 스프링 부트의 대표 시작 정보인 @SpringBootApplication 를 이 프로젝
+트 시작 루트 위치에 두는 것이 관례이다. (그리고 이 설정안에 바로 @ComponentScan 이 들어있다!)
+
+## 컴포넌트 스캔에서 같은 빈 이름을 등록하는 경우
+
+### 자동 빈 등록 vs 자동 빈 등록
+
+컴포넌트 스캔에 의해 자동으로 스프링 빈이 등록되는데, 그 이름이 같은 경우 스프링은 오류를 발생시킨다. `ConflictingBeanDefinitionException` 예외 발생
+
+### 수동 빈 등록 vs 수동 빈 등록
+
+이 경우에는 수동 빈 등록이 우선권을 가진다.(수동 빈이 자동 빈을 오버라이딩 해버린다.)
+
+- 수동 빈 등록시 남는 로그
+
+```
+Overriding bean definition for bean 'memoryMemberRepository' with a different definition: replacing
+```
+
+- 수동 빈 등록, 자동 빈 등록 오류 시 스프링 부트 에러 
+
+```
+Consider renaming one of the beans or enabling overriding by setting
+spring.main.allow-bean-definition-overriding=true
+```
