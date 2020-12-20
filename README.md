@@ -331,6 +331,10 @@ ApplicationContext 를 스프링 컨테이너라 한다.
 @Configuration
 public class AppConfig {
 
+    /**
+     * @Bean 어노테이션은 name 속성을 따로 지정하지 않으면
+     * default 로 메서드명을 name 으로 지정한다.
+     */
     @Bean
     public MemberService memberService() {
         return new MemberServiceImpl(memberRepository());
