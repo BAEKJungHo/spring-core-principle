@@ -333,6 +333,7 @@ public class AppConfig {
 
     /**
      * @Bean 어노테이션은 name 속성을 따로 지정하지 않으면
+     * Ex) @Bean(name="memberService2")
      * default 로 메서드명을 name 으로 지정한다.
      */
     @Bean
@@ -359,12 +360,16 @@ public class AppConfig {
 }
 ```
 
+> 주의: 빈 이름은 항상 다른 이름을 부여해야 한다. 같은 이름을 부여하면, 다른 빈이 무시되거나, 기존 빈을
+덮어버리거나 설정에 따라 오류가 발생한다.
+
 - MemberApp.java 
 
 아래 코드를 관심있게 보면 된다. ApplicationContext 는 ac 라는 네이밍으로도 자주 사용
 
 ```java
 // AppConfig 에 Bean 으로 등록되어있는 애들을 스프링 컨테이너에 넣어서 관리해준다.
+// 스프링 컨테이너는 파라미터로 넘어온 설정 클래스 정보를 사용해서 스프링 빈을 등록한다.
 ApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
 MemberService memberService = ac.getBean("memberService", MemberService.class); // memberService 는 Bean 으로 등록된 메서드 이름
 ```        
