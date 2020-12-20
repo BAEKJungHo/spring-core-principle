@@ -304,3 +304,77 @@ UserController 는 UserService 인터페이스에 의존한다. (import 를 보�
   - IoC 컨테이너 또는 DI 컨테이너라 한다.
   - 의존관계 주입에 초점을 맞추어 `최근에는 주로 DI 컨테이너`라 한다.
   - 또는 어샘블러, 오브젝트 팩토리 등으로 불리기도 한다.
+
+## 스프링 컨테이너에 빈으로 등록하고 관리하기
+
+- AppConfig 
+  - `@Configuration` 어노테이션을 이용해서 설정 파일임을 나타내고 `@Bean` 어노테이션을 이용해서 스프링 컨테이너에 빈으로 등록해준다.
+  
+```java
+/**
+ * AppConfig.java
+ * 애플리케이션에 대한 전반적인 동작 방식(환경 설정)
+ * 구현 객체 생성 담당 및 생성자를 통한 주입
+ */
+@Configuration
+public class AppConfig {
+
+    @Bean
+    public MemberService memberService() {
+        return new MemberServiceImpl(memberRepository());
+    }
+
+    @Bean
+    public MemberRepository memberRepository() {
+        return new MemoryMemberRepository();
+    }
+
+    @Bean
+    public OrderService orderService() {
+        return new OrderServiceImpl(memberRepository(), discountPolicy());
+    }
+
+    @Bean
+    public DiscountPolicy discountPolicy() {
+        // return new FixDiscountPolicy();
+        return new RateDiscountPolicy();
+    }
+
+}
+```
+
+- MemberApp.java 
+
+아래 코드를 관심있게 보면 된다. ApplicationContext 는 ac 라는 네이밍으로도 자주 사용
+
+```java
+// AppConfig 에 Bean 으로 등록되어있는 애들을 스프링 컨테이너에 넣어서 관리해준다.
+ApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
+MemberService memberService = ac.getBean("memberService", MemberService.class); // memberService 는 Bean 으로 등록된 메서드 이름
+```        
+        
+
+```java
+public class MemberApp {
+
+    public static void main(String[] args) {
+        // pure java version
+//        AppConfig appConfig = new AppConfig();
+//        MemberService memberService = appConfig.memberService();
+
+        // spring version
+        // AppConfig 에 Bean 으로 등록되어있는 애들을 스프링 컨테이너에 넣어서 관리해준다.
+        ApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
+        MemberService memberService = ac.getBean("memberService", MemberService.class); // memberService 는 Bean 으로 등록된 메서드 이름
+
+        Member member = new Member(1L, "memberA", Grade.VIP);
+        memberService.join(member);
+
+        Member findMember = memberService.findMember(1L);
+        System.out.println(findMember.getName());
+        System.out.println(member.getName());
+
+    }
+
+}
+```
