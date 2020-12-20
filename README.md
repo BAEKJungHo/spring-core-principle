@@ -463,3 +463,45 @@ public class MemberApp {
 - ApplicationContext는 빈 관리기능 + 편리한 부가 기능을 제공한다.
 - BeanFactory를 직접 사용할 일은 거의 없다. 부가기능이 포함된 ApplicationContext를 사용한다.
 - BeanFactory나 ApplicationContext를 스프링 컨테이너라 한다.
+
+## 다양한 설정 형식 지원 - 자바코드, XML
+
+- 프링 컨테이너는 다양한 형식의 설정 정보를 받아드릴 수 있게 유연하게 설계되어 있다.
+  - 자바 코드, XML, Groovy 등등
+
+![img7](/images/7.JPG)  
+
+### 어노테이션 기반 자바 코드 설정
+
+- new AnnotationConfigApplicationContext(AppConfig.class)
+- AnnotationConfigApplicationContext 클래스를 사용하면서 자바 코드로된 설정 정보를 넘기면 된다.
+
+### XML 설정 사용
+
+> 자세한건 공식 레퍼런스 참고 https://spring.io/projects/spring-framework
+
+- 최근에는 스프링 부트를 많이 사용하면서 XML기반의 설정은 잘 사용하지 않는다. 아직 많은 레거시 프로젝
+트 들이 XML로 되어 있고, 또 XML을 사용하면 컴파일 없이 빈 설정 정보를 변경할 수 있는 장점도 있으므
+로 한번쯤 배워두는 것도 괜찮다.
+- GenericXmlApplictionContext 를 사용하면서 xml 설정 파일을 넘기면 된다.
+
+- src/main/resources/appConfig.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.springframework.org/schema/beans http://
+www.springframework.org/schema/beans/spring-beans.xsd">
+ <bean id="memberService" class="hello.core.member.MemberServiceImpl">
+ <constructor-arg name="memberRepository" ref="memberRepository" />
+ </bean>
+ <bean id="memberRepository"
+class="hello.core.member.MemoryMemberRepository" />
+ <bean id="orderService" class="hello.core.order.OrderServiceImpl">
+ <constructor-arg name="memberRepository" ref="memberRepository" />
+ <constructor-arg name="discountPolicy" ref="discountPolicy" />
+ </bean>
+ <bean id="discountPolicy" class="hello.core.discount.RateDiscountPolicy" />
+</beans>
+```
