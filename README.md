@@ -521,7 +521,7 @@ class="hello.core.member.MemoryMemberRepository" />
 
 - `AnnotationConfigApplicationContext` 는 `AnnotatedBeanDefinitionReader` 를 사용해서 AppConfig.class 를 읽고 BeanDefinition 을 생성한다.
 - `GenericXmlApplicationContext` 는 `XmlBeanDefinitionReader` 를 사용해서 appConfig.xml 설정정보를 읽고 BeanDefinition 을 생성한다.
-- 로운 형식의 설정 정보가 추가되면, XxxBeanDefinitionReader를 만들어서 BeanDefinition 을 생성하면 된다.
+- 새로운 형식의 설정 정보가 추가되면, XxxBeanDefinitionReader를 만들어서 BeanDefinition 을 생성하면 된다.
 
 - BeanDefinition 정보
 - BeanClassName: 생성할 빈의 클래스 명(자바 설정 처럼 팩토리 역할의 빈을 사용하면 없음)
