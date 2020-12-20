@@ -405,3 +405,15 @@ public class MemberApp {
 ### 1. 스프링 컨테이너 생성
 
 [img1](images/1.JPG)
+
+### 2. 스프링 빈 등록
+
+[img2](images/2.JPG)
+
+### 3. 스프링 의존 관계 설정 준비
+
+[img3](images/3.JPG)
+
+### 4. 스프링 의존 관계 설정 완료
+
+[img4](images/4.JPG)
