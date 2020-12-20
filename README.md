@@ -404,4 +404,4 @@ public class MemberApp {
 
 ### 1. 스프링 컨테이너 생성
 
-[img1](../images/1.JPG)
+[img1](./images/1.JPG)
