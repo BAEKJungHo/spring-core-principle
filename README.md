@@ -417,3 +417,10 @@ public class MemberApp {
 ### 4. 스프링 의존 관계 설정 완료
 
 [img4](images/4.JPG)
+
+## 스프링 빈 조회
+
+- ac.getBean(빈이름, 타입)
+- ac.getBean(타입)
+- 조회 대상 스프링 빈이 없으면 예외 발생
+  - `NoSuchBeanDefinitionException: No bean named 'xxxxx' available`
