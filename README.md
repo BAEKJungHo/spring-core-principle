@@ -399,3 +399,9 @@ public class MemberApp {
 
 }
 ```
+
+## 스프링 컨테이너의 의존성 주입 단계
+
+### 1. 스프링 컨테이너 생성
+
+[img1](../images/1.JPG)
