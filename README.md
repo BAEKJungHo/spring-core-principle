@@ -447,7 +447,7 @@ public class MemberApp {
   - 빈을 관리하고 검색하는 기능을 BeanFactory 가 제공해주는데, 그러면 둘의 차이가 뭘까?
   - 애플리케이션을 개발할 때는 빈은 관리하고 조회하는 기능은 물론이고, 수 많은 부가기능이 필요하다. 
   
-- [img6](/images/6.JPG)  
+[img6](/images/6.JPG)  
   
 - `ApplicatonContext가 제공하는 부가기능`
   - `메시지소스를 활용한 국제화 기능`
