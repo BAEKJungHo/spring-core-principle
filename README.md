@@ -408,15 +408,15 @@ public class MemberApp {
 
 ### 2. 스프링 빈 등록
 
-[img2](images/2.JPG)
+![img2](images/2.JPG)
 
 ### 3. 스프링 의존 관계 설정 준비
 
-[img3](images/3.JPG)
+![img3](images/3.JPG)
 
 ### 4. 스프링 의존 관계 설정 완료
 
-[img4](images/4.JPG)
+![img4](images/4.JPG)
 
 ## 스프링 빈 조회
 
@@ -432,7 +432,7 @@ public class MemberApp {
 
 ## BeanFactory 와 ApplicationContext
 
-[img5](/images/5.JPG)
+![img5](/images/5.JPG)
 
 > AnnotationConfig, ApplicationContext -> ApplicationContext(interface) -> BeanFactory(interface)
 
@@ -447,7 +447,7 @@ public class MemberApp {
   - 빈을 관리하고 검색하는 기능을 BeanFactory 가 제공해주는데, 그러면 둘의 차이가 뭘까?
   - 애플리케이션을 개발할 때는 빈은 관리하고 조회하는 기능은 물론이고, 수 많은 부가기능이 필요하다. 
   
-[img6](/images/6.JPG)  
+![img6](/images/6.JPG)  
   
 - `ApplicatonContext가 제공하는 부가기능`
   - `메시지소스를 활용한 국제화 기능`
