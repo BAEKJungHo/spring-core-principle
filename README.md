@@ -315,9 +315,7 @@ UserController 는 UserService 인터페이스에 의존한다. (import 를 보�
   - new AnnotationConfigApplicationContext(AppConfig.class);
   - 이 클래스는 ApplicationContext 인터페이스의 구현체이다.
 
-> 참고: 더 정확히는 스프링 컨테이너를 부를 때` BeanFactory, ApplicationContext` 로 구분해서 이야기
-한다. 이 부분은 뒤에서 설명하겠다. BeanFactory 를 직접 사용하는 경우는 거의 없으므로 일반적으로
-ApplicationContext 를 스프링 컨테이너라 한다.
+> 참고: 더 정확히는 스프링 컨테이너를 부를 때 `BeanFactory, ApplicationContext` 로 구분해서 이야기한다. 이 부분은 뒤에서 설명하겠다. BeanFactory 를 직접 사용하는 경우는 거의 없으므로 일반적으로 ApplicationContext 를 스프링 컨테이너라 한다.
 
 - AppConfig 
   - `@Configuration` 어노테이션을 이용해서 설정 파일임을 나타내고 `@Bean` 어노테이션을 이용해서 스프링 컨테이너에 빈으로 등록해준다.
