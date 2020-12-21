@@ -848,7 +848,7 @@ public MemberRepository memberRepository() {
 - 스프링은 설정 정보가 없어도 자동으로 스프링 빈을 등록하는 컴포넌트 스캔이라는 기능을 제공한다.
 - 또 의존관계도 자동으로 주입하는 @Autowired 라는 기능도 제공한다.
 - 컴포넌트 스캔을 사용하려면 먼저 @ComponentScan 을 설정 정보에 붙여주면 된다.
-- 기존의 AppConfig 와는 다르게 @Bean으로 등록한 클래스가 하나도 없다!
+- 기존의 AppConfig 와는 다르게 @Bean으로 등록한 클래스가 하나도 없다.
 
 ```java
 @Configuration
@@ -921,7 +921,7 @@ public class AutoAppConfig {
 다.
 
 참고로 스프링 부트를 사용하면 스프링 부트의 대표 시작 정보인 @SpringBootApplication 를 이 프로젝
-트 시작 루트 위치에 두는 것이 관례이다. (그리고 이 설정안에 바로 @ComponentScan 이 들어있다!)
+트 시작 루트 위치에 두는 것이 관례이다. (그리고 이 설정안에 바로 @ComponentScan 이 들어있다.)
 
 ## 컴포넌트 스캔에서 같은 빈 이름을 등록하는 경우
 
