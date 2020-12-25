@@ -6,7 +6,11 @@ import com.hello.core.discount.RateDiscountPolicy;
 import com.hello.core.member.Member;
 import com.hello.core.member.MemberRepository;
 import com.hello.core.member.MemoryMemberRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@RequiredArgsConstructor
+@Component
 public class OrderServiceImpl implements OrderService {
 
     // private final MemberRepository memberRepository = new MemoryMemberRepository();
@@ -34,10 +38,10 @@ public class OrderServiceImpl implements OrderService {
      * @param memberRepository
      * @param discountPolicy
      */
-    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-        this.memberRepository = memberRepository;
-        this.discountPolicy = discountPolicy;
-    }
+//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+//        this.memberRepository = memberRepository;
+//        this.discountPolicy = discountPolicy;
+//    }
 
 
     /**
